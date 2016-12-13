@@ -15,6 +15,8 @@ public class Brick{
 
     public int getX() {return brickx; }
     public int getY() {return bricky;}
+    public int getBrickx() {return dx;}
+    public int getBricky() {return dy;}
     public int getHeight() {return brickHeight;}
     public int getWidth() {return brickWidth;}
 }

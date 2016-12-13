@@ -9,21 +9,21 @@ import java.util.ArrayList;
  */
 public class MainDisplay extends JPanel implements KeyListener  {
     ArrayList<ArrayList<Brick>> bricksArray;
-    ArrayList<Ball> ballsOnScreen;
+    Ball ballsOnScreen;
     ArrayList<Paddle> paddles;
     Paddle paddle;
+
 
     @Override
     protected void paintComponent(Graphics g) {
 
         super.paintComponent(g);
 
-        for( int i= 0; i < 1; i++) {
-            g.fillRect(paddles.get(i).getX(), paddles.get(i).getY(), paddles.get(i).getWidth(), paddles.get(i).getHeight());
-        }
+        g.fillRect(paddle.getX(), paddle.getY(), paddle.getWidth(), paddle.getHeight());
+
 
         for (int bbb = 0; bbb < 1; bbb++) {
-            g.fillOval(ballsOnScreen.get(bbb).getX(), ballsOnScreen.get(bbb).getY(), ballsOnScreen.get(bbb).getDiameter(), ballsOnScreen.get(bbb).getDiameter());
+            g.fillOval(ballsOnScreen.getX(), ballsOnScreen.getY(), ballsOnScreen.getDiameter(), ballsOnScreen.getDiameter());
         }
 
         for (int aaa = 0; aaa < bricksArray.size(); aaa++) {
@@ -35,55 +35,39 @@ public class MainDisplay extends JPanel implements KeyListener  {
 
     public void animate() {
         boolean immortal = true;
-        for (int i = 0; i > ballsOnScreen.size(); i++) {
-            if (ballsOnScreen.get(i).getX() + ballsOnScreen.get(i).getDX() >= (getWidth() - 20) || ballsOnScreen.get(i).getX() + ballsOnScreen.get(i).getDX() <= 0) {
-                ballsOnScreen.get(i).bounceX();
+        for (int i = 0; i > 5; i++) {
+            if (ballsOnScreen.getX() + ballsOnScreen.getDX() >= (getWidth() - 20) || ballsOnScreen.getX() + ballsOnScreen.getDX() <= 0) {
+                ballsOnScreen.bounceX();
             } else {
-                if (ballsOnScreen.get(i).getY() + ballsOnScreen.get(i).getDY() >= (getHeight() - 20) || immortal && ballsOnScreen.get(i).getY() + ballsOnScreen.get(i).getDY() <= 0) {
-                    ballsOnScreen.get(i).bounceY();
+                if (ballsOnScreen.getY() + ballsOnScreen.getDY() >= (getHeight() - 20) || immortal && ballsOnScreen.getY() + ballsOnScreen.getDY() <= 0) {
+                    ballsOnScreen.bounceY();
                 }
             }
-            ballsOnScreen.get(i).move();
+            ballsOnScreen.move();
         }
-/*
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (ballsOnScreen.get(i).getY() == bricksArray.get(0).get(j).getY()) {
-                    bricksArray.get(0).remove(j);
-                } else {
-                    if (ballsOnScreen.get(i).getY() == bricksArray.get(1).get(j).getY()) {
-                        bricksArray.get(1).remove(j);
-                    } else {
-                        if (ballsOnScreen.get(i).getY() == bricksArray.get(2).get(j).getY()) {
-                            bricksArray.get(2).remove(j);
-                        } else {
-                            if (ballsOnScreen.get(i).getY() == bricksArray.get(3).get(j).getY()) {
-                                bricksArray.get(3).remove(j);
-                            } else {
-                                if (ballsOnScreen.get(i).getY() == bricksArray.get(4).get(j).getY()) {
-                                    bricksArray.get(4).remove(j);
-                                }
-                            }
-                        }
-                    }
+
+        for (int i = 0; i < bricksArray.size(); i++) {
+            for (int j = 0; j < bricksArray.get(i).size(); j++) {
+                if (ballsOnScreen.getX() >= bricksArray.get(i).get(j).getBrickX() &&
+                        ballsOnScreen.getX() <= bricksArray.get(i).get(j).getWidth() +
+                                bricksArray.get(i).get(j).getBrickX() &&
+                        ballsOnScreen.getY() >= bricksArray.get(i).get(j).getBrickY() &&
+                        ballsOnScreen.getY() <= bricksArray.get(i).get(j).getBrickY() + bricksArray.get(i).get(j).getHeight(); {
+                    ballsOnScreen.bounceY();
+                    bricksArray.get(i).remove(j);
                 }
             }
+
         }
-        */
     }
 
     public MainDisplay() {
         super();
 
-        paddles= new ArrayList<Paddle>();
-        for (int i = 0; i < 5; i++) {
-            paddles.add(new Paddle(150 + (i* 20), 340 +(i *20)));
-        }
+        paddle = new Paddle(200,400);
 
-        ballsOnScreen = new ArrayList<Ball>();
-        for (int bbb = 1; bbb < 5; bbb++) {
-            ballsOnScreen.add(new Ball(20 + (bbb * 30), 240 + (bbb + 5)));
-        }
+        ballsOnScreen= new Ball(250,250);
+
 
         bricksArray = new ArrayList<ArrayList<Brick>>();
         for (int i = 0; i < 5; i++) {
@@ -129,10 +113,10 @@ public class MainDisplay extends JPanel implements KeyListener  {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            paddle.leftPressed = false;
+            paddle.moveLeft();
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            paddle.rightPressed = false;
+            paddle.moveRight();
         }
     }
 

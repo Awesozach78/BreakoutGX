@@ -32,11 +32,15 @@ public class Paddle {
         return PaddleWidth;
     }
 
+    public void moveLeft() {dx = -4;}
+
+    public void moveRight() {dx = 4 ;}
+
     // painting the paddle to the screen
 
 
     // when the moveLeft method is called by the keyPressed method, the paddle should move to the left
-    public void moveLeft() {
+  /* public void moveLeft() {
         if (xPosition - dx > minx) {
             xPosition -= dx;
         } else {
@@ -59,6 +63,5 @@ public class Paddle {
 
     public int getLength() {
         return PaddleWidth;
-
+*/
     }
-}
