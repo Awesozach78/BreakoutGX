@@ -52,7 +52,7 @@ public class MainDisplay extends JPanel implements KeyListener  {
                         ballsOnScreen.getX() <= bricksArray.get(i).get(j).getWidth() +
                                 bricksArray.get(i).get(j).getBrickX() &&
                         ballsOnScreen.getY() >= bricksArray.get(i).get(j).getBrickY() &&
-                        ballsOnScreen.getY() <= bricksArray.get(i).get(j).getBrickY() + bricksArray.get(i).get(j).getHeight(); {
+                        ballsOnScreen.getY() <= bricksArray.get(i).get(j).getBrickY() + bricksArray.get(i).get(j).getHeight()) {
                     ballsOnScreen.bounceY();
                     bricksArray.get(i).remove(j);
                 }
@@ -67,7 +67,6 @@ public class MainDisplay extends JPanel implements KeyListener  {
         paddle = new Paddle(200,400);
 
         ballsOnScreen= new Ball(250,250);
-
 
         bricksArray = new ArrayList<ArrayList<Brick>>();
         for (int i = 0; i < 5; i++) {
@@ -89,6 +88,7 @@ public class MainDisplay extends JPanel implements KeyListener  {
         theApp.setSize(530, 450);                // creates window with width=500 and height=500
         theApp.add(theDisplay);
         theApp.setVisible(true);
+        theApp.setTitle(" NO! ");
 
         // loop forever (well, until the application is closed anyway)
 
@@ -103,10 +103,10 @@ public class MainDisplay extends JPanel implements KeyListener  {
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            paddle.leftPressed = true;
+            paddle.moveLeft();
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                paddle.rightPressed = true;
+                paddle.moveRight();
             }
     }
 
